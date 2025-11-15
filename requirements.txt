@@ -1,0 +1,6 @@
+opencv-python
+yt-dlp
+fpdf
+easyocr
+torch
+torchvision
