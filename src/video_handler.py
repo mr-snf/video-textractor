@@ -2,7 +2,7 @@ import cv2
 import yt_dlp
 import os
 import tempfile
-from . import config
+import config
 
 def is_url(path):
     """Check if the given path is a URL."""

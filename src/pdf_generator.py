@@ -1,5 +1,5 @@
 from fpdf import FPDF
-from . import config
+import config
 import os
 
 class PDF(FPDF):

@@ -43,11 +43,32 @@ Video Textractor is a Python application designed to extract text from any video
     ```
     *Note: The first time you run the application, `EasyOCR` will automatically download the necessary language models. This might take a few moments.*
 
+4.  **Install FFmpeg (Recommended):**
+    For the best results, especially with high-quality YouTube videos, it is highly recommended to install FFmpeg. This allows the application to download and merge the best quality video and audio streams.
+
+    -   **Windows (using Chocolatey or Winget):**
+        ```powershell
+        # Using Chocolatey
+        choco install ffmpeg
+        # OR using Winget
+        winget install "FFmpeg (Essentials Build)"
+        ```
+
+    -   **macOS (using Homebrew):**
+        ```bash
+        brew install ffmpeg
+        ```
+
+    -   **Linux (using APT for Debian/Ubuntu):**
+        ```bash
+        sudo apt update && sudo apt install ffmpeg
+        ```
+
 ## Usage
 
 1.  **Run the application from the root directory:**
     ```bash
-    python src/main.py
+    python run.py
     ```
 
 2.  **Follow the on-screen prompts:**

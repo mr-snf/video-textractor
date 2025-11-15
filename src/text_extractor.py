@@ -1,5 +1,5 @@
 import easyocr
-from . import config
+import config
 
 # Initialize the EasyOCR reader once
 reader = easyocr.Reader(config.OCR_LANGUAGES) # This will download the model on first run

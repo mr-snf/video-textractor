@@ -1,6 +1,6 @@
-from .video_handler import is_url, download_video, extract_frames
-from .text_extractor import extract_text_from_frame
-from .pdf_generator import generate_pdf
+from video_handler import is_url, download_video, extract_frames
+from text_extractor import extract_text_from_frame
+from pdf_generator import generate_pdf
 import os
 
 class VideoTextractor:
@@ -54,7 +54,7 @@ class VideoTextractor:
 
 def main():
     """Main function to get user input and run the VideoTextractor."""
-    video_path = input("Enter the path to the video file or a URL: ")
+    video_path = input("\nEnter the path to the video file or a URL: ")
     cookies_browser = None
 
     if is_url(video_path):
