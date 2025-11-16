@@ -2,3 +2,4 @@ opencv-python
 yt-dlp
 fpdf
 easyocr
+openai
