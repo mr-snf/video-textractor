@@ -83,15 +83,19 @@ Video Textractor is a Python application designed to extract text from any video
 
 ## Usage
 
-1.  **Configure the Application:**
+1.  **Set Up Your API Key (for OpenAI users):**
+    -   Copy the `.env.example` file to a new file named `.env`.
+    -   Open the `.env` file and replace `"your-api-key-here"` with your actual OpenAI API key.
+
+2.  **Configure the Application:**
     Open `src/config.py` to customize settings. The most important setting is `LLM_PROVIDER`, which you can set to `"openai"` or `"local"`.
 
-2.  **Run the application from the root directory:**
+3.  **Run the application from the root directory:**
     ```bash
     python run.py
     ```
 
-3.  **Follow the on-screen prompts:**
+4.  **Follow the on-screen prompts:**
     -   **Enter the path to the video file or a URL:** Provide a local file path (e.g., `C:\videos\my_video.mp4`) or a URL (e.g., `https://www.youtube.com/watch?v=...`).
     -   **Does this video require a login? (yes/no):** If you provided a URL for a private or members-only video, type `yes`.
     -   **Enter the browser to use for cookies...:** If you answered yes, type the name of the browser where you are logged in (e.g., `chrome`, `firefox`).

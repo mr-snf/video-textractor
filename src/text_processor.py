@@ -1,13 +1,18 @@
 import os
 from openai import OpenAI
+from dotenv import load_dotenv
 from . import config
+
+# Load environment variables from a .env file if it exists
+load_dotenv()
 
 def _create_llm_client():
     """Creates and configures the OpenAI client based on the provider in config."""
     if config.LLM_PROVIDER == "openai":
         api_key = os.environ.get("OPENAI_API_KEY")
-        if not api_key:
-            print("\nWarning: OPENAI_API_KEY environment variable not set for 'openai' provider.")
+        if not api_key or api_key == "your-api-key-here":
+            print("\nWarning: OPENAI_API_KEY is not set or is a placeholder.")
+            print("Please create a .env file and add your key.")
             print("Skipping LLM text cleaning. The output may contain noise.")
             return None
         return OpenAI(api_key=api_key)

@@ -120,5 +120,8 @@ dmypy.json
 # VSCode
 .vscode/
 
-# Output files
+# PDF files with extracted text
 output/
+
+# Environment variables
+.env
