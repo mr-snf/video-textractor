@@ -20,7 +20,7 @@ Video Textractor is a Python application designed to extract text from any video
 - **OpenAI Client**: For interfacing with both OpenAI and local LLMs.
 - **yt-dlp**: For downloading online videos.
 - **OpenCV-Python**: For video processing and frame extraction.
-- **FPDF**: For generating the final PDF document.
+- **FPDF2**: For generating the final PDF document.
 
 ## Installation
 
@@ -161,22 +161,3 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-    -   **Enter the browser to use for cookies...:** If you answered yes, type the name of the browser where you are logged in (e.g., `chrome`, `firefox`).
-
-The application will then process the video, clean the text using your configured LLM provider, and save the output as `extracted_text.pdf` in the `output/` directory.
-
-## Using a Local LLM with Ollama
-
-For privacy, offline use, or to avoid API costs, you can run a local LLM using [Ollama](https://ollama.com/).
-
-1.  **Install Ollama:** Follow the instructions on their website to download and install it.
-
-2.  **Download a Model:** Pull a model to use for text cleaning. Smaller models are recommended for better performance.
-    ```bash
-    # Example using Llama 3 (8 billion parameters)
-    ollama pull llama3:8b
-    ```
-
-3.  **Update Config:** In `src/config.py`, set `LLM_PROVIDER = "local"` and ensure `LOCAL_LLM_MODEL` matches the model you downloaded.
-
-4.  **Run Ollama:** Make sure the Ollama application is running before you start Video Textractor.
