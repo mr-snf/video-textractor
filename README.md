@@ -46,7 +46,7 @@ Video Textractor is a Python application designed to extract text from any video
 
     -   **For NVIDIA GPU Users (Recommended for best performance):**
         ```powershell
-        pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+        pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
         ```
 
     -   **For CPU-Only Users:**
@@ -81,23 +81,86 @@ Video Textractor is a Python application designed to extract text from any video
         sudo apt update && sudo apt install ffmpeg
         ```
 
+## LLM Configuration
+
+This project can use a Large Language Model (LLM) to significantly improve the quality of the extracted text by correcting OCR errors, removing gibberish, and formatting the text into coherent paragraphs. You can choose between three providers in the `src/config.py` file.
+
+### 1. Local LLM (Recommended: Fast, Private, Free)
+
+You can use a variety of applications to serve LLMs locally. Both **Ollama** and **LM Studio** are excellent choices as they provide an OpenAI-compatible server out of the box.
+
+#### Using Ollama
+
+1.  **Install Ollama**: Download and install from the [official Ollama website](https://ollama.com/). It will run as a background service.
+2.  **Pull a Model**: Open a terminal and download a recommended model like `phi3:mini`.
+    ```bash
+    ollama pull phi3:mini
+    ```
+3.  **Configure the App**: In `src/config.py`, make sure the settings are configured for Ollama:
+    ```python
+    LLM_PROVIDER = "local"
+    LOCAL_LLM_URL = "http://localhost:11434/v1"
+    LOCAL_LLM_MODEL = "phi3:mini"
+    ```
+
+#### Using LM Studio
+
+1.  **Install LM Studio**: Download and install from the [official LM Studio website](https://lmstudio.ai/).
+2.  **Download a Model**: In the LM Studio app, search for and download a GGUF model. We recommend **"Phi-3-mini-GGUF"**.
+3.  **Start the Server**: Go to the "Local Server" tab (the `<->` icon), select your model at the top, and click **"Start Server"**.
+4.  **Configure the App**: In `src/config.py`, update the URL to point to the LM Studio server:
+    ```python
+    LLM_PROVIDER = "local"
+    LOCAL_LLM_URL = "http://localhost:1234/v1"
+    # The LOCAL_LLM_MODEL setting is not used by LM Studio
+    ```
+
+### 2. OpenAI
+
+Uses the OpenAI API. This requires an API key and will incur costs.
+
+1.  **Set API Key**: Create a `.env` file (from `.env.example`) and add your `OPENAI_API_KEY`.
+2.  **Configure the App**: In `src/config.py`, set `LLM_PROVIDER = "openai"`. You can also change the `OPENAI_MODEL` if you wish.
+
+### 3. Gemini
+
+Uses the Google Gemini API. This also requires an API key and will incur costs.
+
+1.  **Set API Key**: In your `.env` file, add your `GEMINI_API_KEY`.
+2.  **Configure the App**: In `src/config.py`, set `LLM_PROVIDER = "gemini"`.
+
 ## Usage
 
-1.  **Set Up Your API Key (for OpenAI users):**
-    -   Copy the `.env.example` file to a new file named `.env`.
-    -   Open the `.env` file and replace `"your-api-key-here"` with your actual OpenAI API key.
+1.  **Configure the Application:**
+    Open `src/config.py` to customize settings, especially the `LLM_PROVIDER` and `LOCAL_LLM_URL` as described above.
 
-2.  **Configure the Application:**
-    Open `src/config.py` to customize settings. The most important setting is `LLM_PROVIDER`, which you can set to `"openai"` or `"local"`.
-
-3.  **Run the application from the root directory:**
+2.  **Run the application from the root directory:**
     ```bash
     python run.py
     ```
 
-4.  **Follow the on-screen prompts:**
+3.  **Follow the on-screen prompts:**
     -   **Enter the path to the video file or a URL:** Provide a local file path (e.g., `C:\videos\my_video.mp4`) or a URL (e.g., `https://www.youtube.com/watch?v=...`).
     -   **Does this video require a login? (yes/no):** If you provided a URL for a private or members-only video, type `yes`.
+    -   **Enter the browser to use for cookies...:** If you answered yes, specify the browser where you are logged in (e.g., `chrome`, `firefox`).
+
+The final output will be saved as `output/extracted_text.pdf`.
+
+## How It Works
+
+1.  **Video Handling**: If a URL is provided, `yt-dlp` downloads the video. If it's a local file, it's used directly.
+2.  **Frame Extraction**: The video is processed frame by frame using `OpenCV`.
+3.  **Text Extraction**: Each frame is passed to `EasyOCR`, which uses a deep learning model to recognize and extract any text.
+4.  **Text Denoising (LLM)**: The raw, unordered text is sent in chunks to the configured LLM (Ollama, OpenAI, or Gemini), which cleans it up.
+5.  **PDF Generation**: The cleaned text is compiled into a final, readable PDF document.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
     -   **Enter the browser to use for cookies...:** If you answered yes, type the name of the browser where you are logged in (e.g., `chrome`, `firefox`).
 
 The application will then process the video, clean the text using your configured LLM provider, and save the output as `extracted_text.pdf` in the `output/` directory.

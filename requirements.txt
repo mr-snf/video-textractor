@@ -1,6 +1,8 @@
 opencv-python
 yt-dlp
-fpdf
+fpdf2
 easyocr
 openai
 python-dotenv
+google-generativeai
+numpy
